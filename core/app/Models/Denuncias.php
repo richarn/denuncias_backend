@@ -31,4 +31,8 @@ class Denuncias extends Model
     return $this->imagenes()->where('estado', 2);
   }
 
+  public function barrio() {
+    return $this->hasOne(Barrios::class, 'id', 'id_barrio');
+  }
+
 }
