@@ -66,7 +66,7 @@ class DenunciasController extends Controller
     public function show($id) {
 
         // no probaste asi ??
-        $denuncia = Denuncias::with('imagenes')->find($id);
+        $denuncia = Denuncias::with('imagenes', 'denunciante', 'barrio')->find($id);
 
         return response()->json([
             'success' => true,  
