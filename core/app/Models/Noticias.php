@@ -22,7 +22,7 @@ class Noticias extends Model
 
   // relacion - inner join
   public function imagenes() {
-    return $this->belongsToMany(Imagenes::class, 'imagen_noticias', 'id_noticia', 'id');
+    return $this->belongsToMany(Imagenes::class, 'imagen_noticias', 'id_noticia', 'id_imagen');
     // tabla con los datos - imagenes
     // tabla intermedia imagen_noticias -> tiene la relacion con la noticia id_noticia
     // id_noticia - el campo en la table intermedia
