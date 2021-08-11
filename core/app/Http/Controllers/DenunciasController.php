@@ -47,8 +47,8 @@ class DenunciasController extends Controller
             $tomorrow = new Carbon($fecha);
             $tomorrow->addDays(1);
 
-            $query->where('created_at', '>=', $dt->format("Y-m-d"))
-            ->where('created_at', '<', $tomorrow->format("Y-m-d")); // formatear fecha
+            $query->where('fecha_denuncia', '>=', $dt->format("Y-m-d"))
+            ->where('fecha_denuncia', '<', $tomorrow->format("Y-m-d")); // formatear fecha
             //format('d-m-Y')
             
         }
