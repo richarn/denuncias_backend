@@ -31,4 +31,12 @@ class Denuncias extends Model
     return $this->imagenes()->where('estado', 2);
   }
 
+  public function denunciante() {
+    return $this->hasOne(User::class, 'id', 'id_user');
+  }
+
+  public function barrio() {
+    return $this->hasOne(Barrios::class, 'id', 'id_barrio');
+  }
+
 }

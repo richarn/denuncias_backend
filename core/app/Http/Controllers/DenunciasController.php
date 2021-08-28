@@ -14,7 +14,7 @@ class DenunciasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['index']);
+        $this->middleware('auth:api')->except(['index', 'show']);
     }
 
     // GET
@@ -47,14 +47,13 @@ class DenunciasController extends Controller
             $tomorrow = new Carbon($fecha);
             $tomorrow->addDays(1);
 
-            $query->where('created_at', '>=', $dt->format("Y-m-d"))
-            ->where('created_at', '<', $tomorrow->format("Y-m-d")); // formatear fecha
+            $query->where('fecha_denuncia', '>=', $dt->format("Y-m-d"))
+            ->where('fecha_denuncia', '<', $tomorrow->format("Y-m-d")); // formatear fecha
             //format('d-m-Y')
             
         }
 
-        //$denuncias = $query->get();
-        $denuncias = $query->paginate();
+        $denuncias = $query->get();
         
         return response()->json([
             'success' => true,
@@ -66,9 +65,9 @@ class DenunciasController extends Controller
             // GET/ID
     public function show($id) {
 
-        
-        //$denuncia = Denuncias::with('imagenes')->find($id);
-        $denuncia = Denuncias::with('imagenes')->find($id);
+        // no probaste asi ??
+        $denuncia = Denuncias::with('imagenes', 'denunciante', 'barrio')->find($id);
+
         return response()->json([
             'success' => true,  
             'data' => $denuncia
@@ -81,7 +80,6 @@ class DenunciasController extends Controller
 
         $fecha_solucion = $request->get('fecha_solucion');
         $descripcion_denuncia = $request->get('descripcion_denuncia');
-        $descripcion_solucion = $request->get('descripcion_solucion');
         $ubicacion = $request->get('ubicacion');
         $id_barrio = $request->get('id_barrio');
         $id_user = $request->get('id_user');
@@ -94,7 +92,6 @@ class DenunciasController extends Controller
         $denuncias -> fecha_solucion = $fecha_solucion;
         $denuncias -> ubicacion = $ubicacion;
         $denuncias -> descripcion_denuncia = $descripcion_denuncia;
-        $denuncias -> descripcion_solucion = $descripcion_solucion;
         $denuncias -> id_barrio = $id_barrio;
         $denuncias -> id_user = $id_user;
         

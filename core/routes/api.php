@@ -36,15 +36,12 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::resource('barrios', BarriosController::class);
-Route::group(['middleware' => 'auth:api'], function() {
-    Route::resource('denuncias', DenunciasController::class);
-    Route::put('denuncias/{idDenuncia}/uploadImage', [DenunciasController::class, 'uploadImage']);
-    Route::delete('denuncias/{idDenuncia}/imagen/{idImagen}', [DenunciasController::class, 'removeImage']);
-});
+Route::resource('denuncias', DenunciasController::class);
+Route::put('denuncias/{idDenuncia}/uploadImage', [DenunciasController::class, 'uploadImage']);
+Route::delete('denuncias/{idDenuncia}/imagen/{idImagen}', [DenunciasController::class, 'removeImage']);
+
 Route::resource('noticias', NoticiasController::class);
-
 Route::resource('usuarios', AuthController::class);
-
 Route::resource('roles', RolesController::class);
 
 Route::resource('contacto', ContactoController::class);
