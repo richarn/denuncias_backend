@@ -8,6 +8,7 @@ use App\Http\Controllers\BarriosController;
 use App\Http\Controllers\DenunciasController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\ContactoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,8 @@ Route::resource('noticias', NoticiasController::class);
 Route::resource('usuarios', AuthController::class);
 
 Route::resource('roles', RolesController::class);
+
+Route::resource('contacto', ContactoController::class);
 
 
 

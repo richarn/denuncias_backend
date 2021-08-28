@@ -57,7 +57,7 @@ class AuthController extends Controller
         $usuarios -> telefono = $telefono;
         $usuarios -> id_barrio = $id_barrio;
         $usuarios -> id_role = $id_role;
-        $usuarios -> estado = $estado ? $estado : $usuarios->estado;
+        $usuarios -> estado = $estado != "" ? $estado : $usuarios->estado;
 		$usuarios->save();
     
         return response()->json(['success' => true, 'message' => 'Usuario actualizado correctamente']);  
@@ -114,18 +114,24 @@ class AuthController extends Controller
 
         $user->save();
 
-        $tokenResult = $this->createToken($request);
-        if (!$tokenResult) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        if (!$request->ignoreToken) {
+            $tokenResult = $this->createToken($request);
+            if (!$tokenResult) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+            }
         }
 
         // $user->notify(new SignupActivate($user));
-
-        return response()->json([
+        $response = [
             'success' => true,
             'message' => 'Usuario creado exitosamente!',
-            'access_token' => $tokenResult->accessToken
-        ], 201);
+        ];
+
+        if (!$request->ignoreToken) {
+            $response['access_token'] = $tokenResult->accessToken;
+        }
+
+        return response()->json($response, 201);
     }
 
     public function login(Request $request)
